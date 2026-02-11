@@ -79,33 +79,29 @@
 # Use `Model.destroy_all` code.
 # TODO!
 
-Studio.destroy_all
+Role.destroy_all
 Movie.destroy_all
 Actor.destroy_all
-Role.destroy_all
+Studio.destroy_all
 Agent.destroy_all
 
 # Generate models and tables, according to the domain model.
 # TODO!
-rails generate model Studio name:string
-
-rails generate model Movie title:string year_released:integer rated:string studio:references
-
-rails generate model Actor name:string agent:references
-
-rails generate model Role character_name:string movie:references actor:references
-
-rails generate model Agent name:string
+# rails generate model Studio name:string
+# rails generate model Movie title:string year_released:integer rated:string studio:references
+# rails generate model Actor name:string agent:references
+# rails generate model Role character_name:string movie:references actor:references
+# rails generate model Agent name:string
 
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
 
-warner_bros = Studio.create("Warner Bros")
+warner_bros = Studio.create(name: "Warner Bros.")
 
-agent = Agent.create("agent")
+agent = Agent.create(name: "agent")
 
-bale_ = Actor.create(name: "Christian Bale", agent: agent)
+bale = Actor.create(name: "Christian Bale", agent: agent)
 caine = Actor.create(name: "Michael Caine")
 neeson = Actor.create(name: "Liam Neeson")
 holmes = Actor.create(name:"Katie Holmes")
@@ -119,7 +115,7 @@ hathaway = Actor.create(name:"Anne Hathaway")
 
 batman_begins = Movie.create(title:"Batman Begins", year_released: 2005, rated: "PG-13", studio: warner_bros)
 dark_knight = Movie.create(title:"The Dark Knight", year_released:2008, rated: "PG-13", studio: warner_bros)
-dark_knight_rises = Movie.create(title:"The Dark Knight Rises", year released: 2012, rated: "PG-13", studio: warner_bros)
+dark_knight_rises = Movie.create(title:"The Dark Knight Rises", year_released: 2012, rated: "PG-13", studio: warner_bros)
 
 wayne_BB = Role.create(character_name:"Bruce Wayne", movie:batman_begins, actor:bale)
 alfred = Role.create(character_name:"Alfred",movie:batman_begins, actor:caine)
@@ -129,6 +125,7 @@ gordon_BB = Role.create(character_name: "Commissioner Gordon", movie: batman_beg
 wayne_DK = Role.create(character_name:"Bruce Wayne",movie: dark_knight, actor: bale)
 joker = Role.create(character_name: "Joker", movie: dark_knight, actor: ledger)
 dent = Role.create(character_name: "Harvey Dent", movie: dark_knight, actor: eckhart)
+alfred_DK = Role.create(character_name: "Alfred", movie: dark_knight, actor: caine)
 dawes_DK = Role.create(character_name: "Rachel Dawes", movie: dark_knight, actor: gyllenhaal)
 wayne_DKR = Role.create(character_name: "Bruce Wayne", movie: dark_knight_rises, actor: bale)
 gordon_DKR = Role.create(character_name: "Commissioner Gordon", movie: dark_knight_rises, actor: oldman)
