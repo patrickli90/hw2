@@ -79,12 +79,63 @@
 # Use `Model.destroy_all` code.
 # TODO!
 
+Studio.destroy_all
+Movie.destroy_all
+Actor.destroy_all
+Role.destroy_all
+Agent.destroy_all
+
 # Generate models and tables, according to the domain model.
 # TODO!
+rails generate model Studio name:string
+
+rails generate model Movie title:string year_released:integer rated:string studio:references
+
+rails generate model Actor name:string agent:references
+
+rails generate model Role character_name:string movie:references actor:references
+
+rails generate model Agent name:string
 
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
+
+warner_bros = Studio.create("Warner Bros")
+
+agent = Agent.create("agent")
+
+bale_ = Actor.create(name: "Christian Bale", agent: agent)
+caine = Actor.create(name: "Michael Caine")
+neeson = Actor.create(name: "Liam Neeson")
+holmes = Actor.create(name:"Katie Holmes")
+oldman = Actor.create(name:"Gary Oldman")
+ledger = Actor.create(name:"Heath Ledger")
+eckhart = Actor.create(name:"Aaron Eckhart")
+gyllenhaal = Actor.create(name:"Maggie Gyllenhaal")
+hardy = Actor.create(name:"Tom Hardy")
+gordon = Actor.create(name:"Joseph Gordon-Levitt")
+hathaway = Actor.create(name:"Anne Hathaway")
+
+batman_begins = Movie.create(title:"Batman Begins", year_released: 2005, rated: "PG-13", studio: warner_bros)
+dark_knight = Movie.create(title:"The Dark Knight", year_released:2008, rated: "PG-13", studio: warner_bros)
+dark_knight_rises = Movie.create(title:"The Dark Knight Rises", year released: 2012, rated: "PG-13", studio: warner_bros)
+
+wayne_BB = Role.create(character_name:"Bruce Wayne", movie:batman_begins, actor:bale)
+alfred = Role.create(character_name:"Alfred",movie:batman_begins, actor:caine)
+ghul = Role.create(character_name: "Ra's Al Ghul", movie:batman_begins, actor:neeson)
+dawes = Role.create(character_name: "Rachel Dawes", movie: batman_begins, actor: holmes)
+gordon_BB = Role.create(character_name: "Commissioner Gordon", movie: batman_begins, actor: oldman)
+wayne_DK = Role.create(character_name:"Bruce Wayne",movie: dark_knight, actor: bale)
+joker = Role.create(character_name: "Joker", movie: dark_knight, actor: ledger)
+dent = Role.create(character_name: "Harvey Dent", movie: dark_knight, actor: eckhart)
+dawes_DK = Role.create(character_name: "Rachel Dawes", movie: dark_knight, actor: gyllenhaal)
+wayne_DKR = Role.create(character_name: "Bruce Wayne", movie: dark_knight_rises, actor: bale)
+gordon_DKR = Role.create(character_name: "Commissioner Gordon", movie: dark_knight_rises, actor: oldman)
+bane = Role.create(character_name: "Bane", movie: dark_knight_rises, actor: hardy)
+blake = Role.create(character_name: "John Blake", movie: dark_knight_rises, actor: gordon)
+kyle = Role.create(character_name: "Selina Kyle", movie: dark_knight_rises, actor: hathaway)
+
 
 # Prints a header for the movies output
 puts "Movies"
@@ -93,6 +144,11 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+movies = Movie.all
+
+movies.each do |movie|
+puts "#{movie.title}  #{movie.year_released}  #{movie.rated}  #{movie.studio.name}"
+end
 
 # Prints a header for the cast output
 puts ""
@@ -103,6 +159,11 @@ puts ""
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
 
+roles = Role.all
+roles.each do |role|
+  puts "#{role.movie.title}  #{role.actor.name}  #{role.character_name}" 
+end
+
 # Prints a header for the agent's list of represented actors output
 puts ""
 puts "Represented by agent"
@@ -111,3 +172,10 @@ puts ""
 
 # Query the actor data and loop through the results to display the agent's list of represented actors output.
 # TODO!
+actors = Actor.all
+actors.each do |actor|
+  if actor.agent== nil
+  else
+    puts "#{actor.name}"
+end
+end
